@@ -1,6 +1,10 @@
 # Extend the Base ActionController to support themes
 ActionController::Base.class_eval do 
-
+    
+   if ENV['RAILS_ENV'] == 'development'
+    before_filter {|controller| system "rsync -ruv themes public/ --exclude=views --exclude=*.sass"}
+   end
+  
    attr_accessor :current_theme
    attr_accessor :force_liquid_template
    
